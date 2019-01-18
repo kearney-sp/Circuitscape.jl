@@ -325,7 +325,7 @@ end
         
 function write_aagrid(cmap, name, cfg, hbmeta; 
                         voltage = false, cum = false, 
-                        max = false)
+                        max = false, write_digits = write_digits)
 
 
     str = "curmap"
@@ -355,7 +355,7 @@ end
 
 function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
                         voltage = false, cum = false, max = false,
-                        log_transform = false, set_null_to_nodata = false)
+                        log_transform = false, set_null_to_nodata = false, write_digits = write_digits)
 
     pref = split(cfg["output_file"], '.')[1]
 
@@ -390,7 +390,7 @@ function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
     write(f, "cellsize      $(hbmeta.cellsize)\n")
     write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-    writedlm(f, round.(cmap, digits=8), ' ')
+    writedlm(f, round.(cmap, digits=write_digits), ' ')
     close(f)
 end
 
