@@ -83,7 +83,7 @@ function amg_solver_path(data::GraphData{T,V}, flags, cfg, log)::Matrix{T} where
     write_digits = outputflags.write_digits
     
     # Get number of digits to print
-    numdigits = parse(UInt16, write_digits)
+    numdigits = parse(Int, cfg["write_digits"])
 
     # Get number of focal points
     numpoints = size(points, 1)
