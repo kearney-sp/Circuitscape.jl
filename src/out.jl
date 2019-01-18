@@ -7,7 +7,6 @@ struct OutputFlags
     set_null_voltages_to_nodata::Bool
     compress_grids::Bool
     log_transform_maps::Bool
-    write_digits::UInt16
 end
 
 function compute_3col(resistances::Matrix{T}) where {T}
