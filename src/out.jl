@@ -7,6 +7,7 @@ struct OutputFlags
     set_null_voltages_to_nodata::Bool
     compress_grids::Bool
     log_transform_maps::Bool
+    write_digits::UInt16
 end
 
 function compute_3col(resistances::Matrix{T}) where {T}
@@ -42,6 +43,7 @@ function write_cur_maps(name, output, component_data, finitegrounds, flags, cfg)
         flags.outputflags.set_null_currents_to_nodata
     write_max_cur_maps = flags.outputflags.write_max_cur_maps
     write_cum_cur_map_only = flags.outputflags.write_cum_cur_map_only
+    write_digits = flags.outputflags.write_digits
 
     node_currents, branch_currents = _create_current_maps(G, voltages, finitegrounds, cfg, nodemap = nodemap, hbmeta = hbmeta)
 
@@ -346,7 +348,7 @@ function write_aagrid(cmap, name, cfg, hbmeta;
     write(f, "cellsize      $(hbmeta.cellsize)\n")
     write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-    writedlm(f, round.(cmap, digits=8), ' ')
+    writedlm(f, round.(cmap, digits = write_digits), ' ')
     close(f)
 end
 
