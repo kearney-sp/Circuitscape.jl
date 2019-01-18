@@ -3,6 +3,7 @@ struct OutputFlags
     write_cur_maps::Bool
     write_cum_cur_map_only::Bool
     write_max_cur_maps::Bool
+    write_digits::UInt16
     set_null_currents_to_nodata::Bool
     set_null_voltages_to_nodata::Bool
     compress_grids::Bool
