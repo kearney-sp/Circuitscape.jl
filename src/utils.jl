@@ -110,7 +110,7 @@ function get_output_flags(cfg)
     write_cur_maps = cfg["write_cur_maps"] in TRUELIST
     write_cum_cur_map_only = cfg["write_cum_cur_map_only"] in TRUELIST
     write_max_cur_maps = cfg["write_max_cur_maps"] in TRUELIST
-    write_digits = cfg["write_digits"] in TRUELIST ? UInt16 : UInt8
+    write_digits = cfg["write_digits"] in TRUELIST
     set_null_currents_to_nodata = cfg["set_null_currents_to_nodata"] in TRUELIST
     set_null_voltages_to_nodata = cfg["set_null_voltages_to_nodata"] in TRUELIST
     compress_grids = cfg["compress_grids"] in TRUELIST
