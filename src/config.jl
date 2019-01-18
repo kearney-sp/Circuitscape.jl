@@ -68,6 +68,7 @@ function init_config()
     a["log_level"] = "INFO"
     a["cholmod_batch_size"] = "1000"
     a["use_64bit_indexing"] = "false"
+    a["write_digits"] = "8"
 
     a
 end
@@ -134,6 +135,7 @@ function write_config(cfg)
         set_null_voltages_to_nodata = $(cfg["set_null_voltages_to_nodata"] in TRUELIST)
         compress_grids = $(cfg["compress_grids"] in TRUELIST)
         write_cur_maps = $(cfg["write_cur_maps"] in TRUELIST)
+        write_digits = $(cfg["write_digits"])
         """)
     end
 end
