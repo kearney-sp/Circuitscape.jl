@@ -339,7 +339,7 @@ function write_aagrid(cmap, name, cfg, hbmeta;
 
     pref = split(cfg["output_file"], '.')[1]
     filename = "$(pref)_$(str)$(name).asc"
-    f = open(filename, "w")
+    f = GZip.open(filename, "w")
 
     write(f, "ncols         $(hbmeta.ncols)\n")
     write(f, "nrows         $(hbmeta.nrows)\n")
@@ -349,7 +349,7 @@ function write_aagrid(cmap, name, cfg, hbmeta;
     write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
     numdigits = parse(Int, cfg["write_digits"])
-    writedlm(f, round.(cmap, digits = numdigits), ' ')
+    GZip.write(f, round.(cmap, digits = numdigits), ' ')
     close(f)
 end
 
@@ -382,7 +382,7 @@ function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
     end
 
     filename = "$(pref)_$(str)$(name).asc"
-    f = open(filename, "w")
+    f = GZip.open(filename, "w")
 
     write(f, "ncols         $(hbmeta.ncols)\n")
     write(f, "nrows         $(hbmeta.nrows)\n")
@@ -392,7 +392,7 @@ function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
     write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
     numdigits = parse(Int, cfg["write_digits"])
-    writedlm(f, round.(cmap, digits=numdigits), ' ')
+    GZip.write(f, round.(cmap, digits = numdigits), ' ')
     close(f)
 end
 
