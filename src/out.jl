@@ -3,6 +3,7 @@ struct OutputFlags
     write_cur_maps::Bool
     write_cum_cur_map_only::Bool
     write_max_cur_maps::Bool
+    write_digits::UInt16
     set_null_currents_to_nodata::Bool
     set_null_voltages_to_nodata::Bool
     compress_grids::Bool
@@ -42,6 +43,7 @@ function write_cur_maps(name, output, component_data, finitegrounds, flags, cfg)
         flags.outputflags.set_null_currents_to_nodata
     write_max_cur_maps = flags.outputflags.write_max_cur_maps
     write_cum_cur_map_only = flags.outputflags.write_cum_cur_map_only
+    write_digits = flags.outputflags.write_digits
 
     node_currents, branch_currents = _create_current_maps(G, voltages, finitegrounds, cfg, nodemap = nodemap, hbmeta = hbmeta)
 
@@ -346,7 +348,8 @@ function write_aagrid(cmap, name, cfg, hbmeta;
     write(f, "cellsize      $(hbmeta.cellsize)\n")
     write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-    writedlm(f, round.(cmap, digits=8), ' ')
+    numdigits = parse(Int, cfg["write_digits"])
+    writedlm(f, round.(cmap, digits = numdigits), ' ')
     close(f)
 end
 
@@ -388,7 +391,8 @@ function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
     write(f, "cellsize      $(hbmeta.cellsize)\n")
     write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-    writedlm(f, round.(cmap, digits=8), ' ')
+    numdigits = parse(Int, cfg["write_digits"])
+    writedlm(f, round.(cmap, digits=numdigits), ' ')
     close(f)
 end
 

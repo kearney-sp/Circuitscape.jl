@@ -80,6 +80,10 @@ function amg_solver_path(data::GraphData{T,V}, flags, cfg, log)::Matrix{T} where
     write_cur_maps = outputflags.write_cur_maps
     write_cum_cur_map_only = outputflags.write_cum_cur_map_only
     write_max_cur_maps = outputflags.write_max_cur_maps
+    write_digits = outputflags.write_digits
+    
+    # Get number of digits to print
+    numdigits = parse(Int, cfg["write_digits"])
 
     # Get number of focal points
     numpoints = size(points, 1)
@@ -87,6 +91,7 @@ function amg_solver_path(data::GraphData{T,V}, flags, cfg, log)::Matrix{T} where
     # Cumulative currents
     cum = data.cum
     
+    csinfo("Rounding output to $numdigits digits")
     csinfo("Graph has $(size(a,1)) nodes, $numpoints focal points and $(length(cc)) connected components")
 
     num, d = get_num_pairs(cc, points, exclude)
