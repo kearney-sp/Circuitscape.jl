@@ -41,7 +41,6 @@ function write_cur_maps(name, output, component_data, finitegrounds, flags, cfg)
     log_transform = flags.outputflags.log_transform_maps
     set_null_currents_to_nodata = 
         flags.outputflags.set_null_currents_to_nodata
-    compress_grids = flags.outputflags.compress_grids
     write_max_cur_maps = flags.outputflags.write_max_cur_maps
     write_cum_cur_map_only = flags.outputflags.write_cum_cur_map_only
     write_digits = flags.outputflags.write_digits
@@ -340,7 +339,7 @@ function write_aagrid(cmap, name, cfg, hbmeta;
 
     pref = split(cfg["output_file"], '.')[1]
     
-    compress_grids = cfg["compress_grids"]
+    compress_grids = flags.outputflags.compress_grids
 	
     if compress_grids
 	filename = "$(pref)_$(str)$(name).gz"
@@ -399,7 +398,7 @@ function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
         str = "voltmap"
     end
    
-    compress_grids = cfg["compress_grids"]
+    compress_grids = flags.outputflags.compress_grids
 	
     if compress_grids
 	filename = "$(pref)_$(str)$(name).gz"
