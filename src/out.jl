@@ -326,7 +326,7 @@ end
         
 function write_aagrid(cmap, name, cfg, hbmeta; 
                         voltage = false, cum = false, 
-                        max = false, compress_grids = compress_grids)
+                        max = false)
 
 
     str = "curmap"
@@ -339,7 +339,9 @@ function write_aagrid(cmap, name, cfg, hbmeta;
     end
 
     pref = split(cfg["output_file"], '.')[1]
-        
+    
+    compress_grids = cfg["compress_grids"]
+	
     if compress_grids
 	filename = "$(pref)_$(str)$(name).gz"
         f = GZip.open(filename, "w")
@@ -372,8 +374,7 @@ end
 
 function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
                         voltage = false, cum = false, max = false,
-                        log_transform = false, set_null_to_nodata = false,
-			compress_grids = compress_grids)
+                        log_transform = false, set_null_to_nodata = false)
 
     pref = split(cfg["output_file"], '.')[1]
 
@@ -398,6 +399,8 @@ function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
         str = "voltmap"
     end
    
+    compress_grids = cfg["compress_grids"]
+	
     if compress_grids
 	filename = "$(pref)_$(str)$(name).gz"
         f = GZip.open(filename, "w")
