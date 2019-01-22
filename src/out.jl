@@ -339,9 +339,9 @@ function write_aagrid(cmap, name, cfg, hbmeta;
     end
 
     pref = split(cfg["output_file"], '.')[1]
-    filename = "$(pref)_$(str)$(name).asc"
-    
+        
     if compress_grids
+	filename = "$(pref)_$(str)$(name).gz"
         f = GZip.open(filename, "w")
         write(f, "ncols         $(hbmeta.ncols)\n")
         write(f, "nrows         $(hbmeta.nrows)\n")
@@ -354,6 +354,7 @@ function write_aagrid(cmap, name, cfg, hbmeta;
         GZip.write(f, round.(cmap, digits = numdigits), ' ')
         close(f)
     else
+	filename = "$(pref)_$(str)$(name).asc"
 	f = open(filename, "w")
         write(f, "ncols         $(hbmeta.ncols)\n")
         write(f, "nrows         $(hbmeta.nrows)\n")
@@ -395,10 +396,9 @@ function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
     elseif voltage
         str = "voltmap"
     end
-
-    filename = "$(pref)_$(str)$(name).asc"
-    
+   
     if compress_grids
+	filename = "$(pref)_$(str)$(name).gz"
         f = GZip.open(filename, "w")
         write(f, "ncols         $(hbmeta.ncols)\n")
         write(f, "nrows         $(hbmeta.nrows)\n")
@@ -411,6 +411,7 @@ function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
         GZip.write(f, round.(cmap, digits = numdigits), ' ')
         close(f)
     else
+	filename = "$(pref)_$(str)$(name).asc"
 	f = open(filename, "w")
         write(f, "ncols         $(hbmeta.ncols)\n")
         write(f, "nrows         $(hbmeta.nrows)\n")
