@@ -41,6 +41,7 @@ function write_cur_maps(name, output, component_data, finitegrounds, flags, cfg)
     log_transform = flags.outputflags.log_transform_maps
     set_null_currents_to_nodata = 
         flags.outputflags.set_null_currents_to_nodata
+    compress_grids = flags.outputflags.compress_grids
     write_max_cur_maps = flags.outputflags.write_max_cur_maps
     write_cum_cur_map_only = flags.outputflags.write_cum_cur_map_only
     write_digits = flags.outputflags.write_digits
@@ -325,7 +326,7 @@ end
         
 function write_aagrid(cmap, name, cfg, hbmeta; 
                         voltage = false, cum = false, 
-                        max = false)
+                        max = false, compress_grids = compress_grids)
 
 
     str = "curmap"
@@ -339,24 +340,38 @@ function write_aagrid(cmap, name, cfg, hbmeta;
 
     pref = split(cfg["output_file"], '.')[1]
     filename = "$(pref)_$(str)$(name).asc"
-    f = GZip.open(filename, "w")
+    
+    if compress_grids
+        f = GZip.open(filename, "w")
+        write(f, "ncols         $(hbmeta.ncols)\n")
+        write(f, "nrows         $(hbmeta.nrows)\n")
+        write(f, "xllcorner     $(hbmeta.xllcorner)\n")
+        write(f, "yllcorner     $(hbmeta.yllcorner)\n")
+        write(f, "cellsize      $(hbmeta.cellsize)\n")
+        write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-    write(f, "ncols         $(hbmeta.ncols)\n")
-    write(f, "nrows         $(hbmeta.nrows)\n")
-    write(f, "xllcorner     $(hbmeta.xllcorner)\n")
-    write(f, "yllcorner     $(hbmeta.yllcorner)\n")
-    write(f, "cellsize      $(hbmeta.cellsize)\n")
-    write(f, "NODATA_value  $(hbmeta.nodata)\n")
+        numdigits = parse(Int, cfg["write_digits"])
+        GZip.write(f, round.(cmap, digits = numdigits), ' ')
+        close(f)
+    else
+	f = open(filename, "w")
+        write(f, "ncols         $(hbmeta.ncols)\n")
+        write(f, "nrows         $(hbmeta.nrows)\n")
+        write(f, "xllcorner     $(hbmeta.xllcorner)\n")
+        write(f, "yllcorner     $(hbmeta.yllcorner)\n")
+        write(f, "cellsize      $(hbmeta.cellsize)\n")
+        write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-    numdigits = parse(Int, cfg["write_digits"])
-    GZip.write(f, round.(cmap, digits = numdigits), ' ')
-    close(f)
+        numdigits = parse(Int, cfg["write_digits"])
+        writelm(f, round.(cmap, digits = numdigits), ' ')
+        close(f)
 end
 
 
 function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
                         voltage = false, cum = false, max = false,
-                        log_transform = false, set_null_to_nodata = false)
+                        log_transform = false, set_null_to_nodata = false,
+			compress_grids = compress_grids)
 
     pref = split(cfg["output_file"], '.')[1]
 
@@ -382,18 +397,31 @@ function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
     end
 
     filename = "$(pref)_$(str)$(name).asc"
-    f = GZip.open(filename, "w")
+    
+    if compress_grids
+        f = GZip.open(filename, "w")
+        write(f, "ncols         $(hbmeta.ncols)\n")
+        write(f, "nrows         $(hbmeta.nrows)\n")
+        write(f, "xllcorner     $(hbmeta.xllcorner)\n")
+        write(f, "yllcorner     $(hbmeta.yllcorner)\n")
+        write(f, "cellsize      $(hbmeta.cellsize)\n")
+        write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-    write(f, "ncols         $(hbmeta.ncols)\n")
-    write(f, "nrows         $(hbmeta.nrows)\n")
-    write(f, "xllcorner     $(hbmeta.xllcorner)\n")
-    write(f, "yllcorner     $(hbmeta.yllcorner)\n")
-    write(f, "cellsize      $(hbmeta.cellsize)\n")
-    write(f, "NODATA_value  $(hbmeta.nodata)\n")
+        numdigits = parse(Int, cfg["write_digits"])
+        GZip.write(f, round.(cmap, digits = numdigits), ' ')
+        close(f)
+    else
+	f = open(filename, "w")
+        write(f, "ncols         $(hbmeta.ncols)\n")
+        write(f, "nrows         $(hbmeta.nrows)\n")
+        write(f, "xllcorner     $(hbmeta.xllcorner)\n")
+        write(f, "yllcorner     $(hbmeta.yllcorner)\n")
+        write(f, "cellsize      $(hbmeta.cellsize)\n")
+        write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-    numdigits = parse(Int, cfg["write_digits"])
-    GZip.write(f, round.(cmap, digits = numdigits), ' ')
-    close(f)
+        numdigits = parse(Int, cfg["write_digits"])
+        writelm(f, round.(cmap, digits = numdigits), ' ')
+        close(f)
 end
 
 function write_volt_maps(name, output, component_data, flags, cfg)
