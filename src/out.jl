@@ -366,6 +366,7 @@ function write_aagrid(cmap, name, cfg, hbmeta;
         numdigits = parse(Int, cfg["write_digits"])
         writelm(f, round.(cmap, digits = numdigits), ' ')
         close(f)
+    end
 end
 
 
@@ -423,6 +424,7 @@ function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
         numdigits = parse(Int, cfg["write_digits"])
         writelm(f, round.(cmap, digits = numdigits), ' ')
         close(f)
+    end
 end
 
 function write_volt_maps(name, output, component_data, flags, cfg)
