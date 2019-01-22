@@ -323,9 +323,9 @@ function process_grid!(cmap, cellmap, hbmeta; log_transform = false,
 
 end
         
-function write_aagrid(cmap, name, cfg, hbmeta; 
+function write_aagrid(cmap, name, cfg, flags, hbmeta; 
                         voltage = false, cum = false, 
-                        max = false, flags)
+                        max = false)
 
 
     str = "curmap"
@@ -371,9 +371,9 @@ function write_aagrid(cmap, name, cfg, hbmeta;
 end
 
 
-function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
+function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
                         voltage = false, cum = false, max = false,
-                        log_transform = false, set_null_to_nodata = false, flags)
+                        log_transform = false, set_null_to_nodata = false)
 
     pref = split(cfg["output_file"], '.')[1]
 
