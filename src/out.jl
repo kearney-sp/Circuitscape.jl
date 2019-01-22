@@ -325,7 +325,7 @@ end
         
 function write_aagrid(cmap, name, cfg, hbmeta; 
                         voltage = false, cum = false, 
-                        max = false)
+                        max = false, flags)
 
 
     str = "curmap"
@@ -373,7 +373,7 @@ end
 
 function write_aagrid(cmap, name, cfg, hbmeta, cellmap;
                         voltage = false, cum = false, max = false,
-                        log_transform = false, set_null_to_nodata = false)
+                        log_transform = false, set_null_to_nodata = false, flags)
 
     pref = split(cfg["output_file"], '.')[1]
 
