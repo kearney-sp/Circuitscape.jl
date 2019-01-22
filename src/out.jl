@@ -510,7 +510,7 @@ function save_resistances(r, cfg)
     end
 end
 
-function write_cum_maps(cum, cellmap::Matrix{T}, cfg, hbmeta, write_max, write_cum) where T
+function write_cum_maps(cum, cellmap::Matrix{T}, cfg, flags, hbmeta, write_max, write_cum) where T
     
     if write_cum || cfg["write_cur_maps"] in TRUELIST
         cum_curr = zeros(T, size(cellmap)...)
