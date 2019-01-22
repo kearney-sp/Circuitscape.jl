@@ -85,7 +85,7 @@ function write_cur_maps(name, output, component_data, finitegrounds, flags, cfg)
 
         # Write current maps
         !write_cum_cur_map_only &&
-                        write_aagrid(cmap, name, cfg, hbmeta)
+                        write_aagrid(cmap, name, cfg, flags, hbmeta)
 
    end
 end
@@ -448,7 +448,7 @@ function write_volt_maps(name, output, component_data, flags, cfg)
         set_null_voltages_to_nodata = flags.outputflags.set_null_voltages_to_nodata
 
         vm = _create_voltage_map(voltages, nodemap, hbmeta)
-        write_aagrid(vm, name, cfg, hbmeta, component_data.cellmap, voltage = true, 
+        write_aagrid(vm, name, cfg, flags, hbmeta, component_data.cellmap, voltage = true, 
                         set_null_to_nodata = set_null_voltages_to_nodata)
     end
 end
@@ -518,7 +518,7 @@ function write_cum_maps(cum, cellmap::Matrix{T}, cfg, hbmeta, write_max, write_c
             cum_curr .+= cum.cum_curr[i]
         end 
         postprocess_cum_curmap!(cum_curr)
-        write_aagrid(cum_curr, "", cfg, hbmeta, cum = true)
+        write_aagrid(cum_curr, "", cfg, flags, hbmeta, cum = true)
     end
 
     if write_max
@@ -527,7 +527,7 @@ function write_cum_maps(cum, cellmap::Matrix{T}, cfg, hbmeta, write_max, write_c
             max_curr .= max.(cum.max_curr[i], max_curr)
         end
         postprocess_cum_curmap!(max_curr)
-        write_aagrid(max_curr, "", cfg, hbmeta, max = true)
+        write_aagrid(max_curr, "", cfg, flags, hbmeta, max = true)
     end
 
 end
