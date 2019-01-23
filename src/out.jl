@@ -341,37 +341,27 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
     
     compress_grids = flags.outputflags.compress_grids
 	
+    filename = "$(pref)_$(str)$(name).asc"
+    f = open(filename, "w")
+    write(f, "ncols         $(hbmeta.ncols)\n")
+    write(f, "nrows         $(hbmeta.nrows)\n")
+    write(f, "xllcorner     $(hbmeta.xllcorner)\n")
+    write(f, "yllcorner     $(hbmeta.yllcorner)\n")
+    write(f, "cellsize      $(hbmeta.cellsize)\n")
+    write(f, "NODATA_value  $(hbmeta.nodata)\n")
+
+    numdigits = parse(Int, cfg["write_digits"])
+    writedlm(f, round.(cmap, digits = numdigits), ' ')
+    close(f)
+    
     if compress_grids
-	filename = "$(pref)_$(str)$(name).gz"
-        #f = GZip.open(filename, "w6", 15)
-        io = open(filename, "w")
-	f = Libz.ZlibDeflateOutputStream(io)
-	#write(f, "ncols         $(hbmeta.ncols)\n")
-        #write(f, "nrows         $(hbmeta.nrows)\n")
-        #write(f, "xllcorner     $(hbmeta.xllcorner)\n")
-        #write(f, "yllcorner     $(hbmeta.yllcorner)\n")
-        #write(f, "cellsize      $(hbmeta.cellsize)\n")
-        #write(f, "NODATA_value  $(hbmeta.nodata)\n")
-
-        numdigits = parse(Int, cfg["write_digits"])
-        #GZip.write(f, round.(cmap, digits = numdigits), ' ')
-	for c in round.(cmap, digits = numdigits)
-	    write(f, c)
-	end
-        close(f)
-    else
-	filename = "$(pref)_$(str)$(name).asc"
-	f = open(filename, "w")
-        write(f, "ncols         $(hbmeta.ncols)\n")
-        write(f, "nrows         $(hbmeta.nrows)\n")
-        write(f, "xllcorner     $(hbmeta.xllcorner)\n")
-        write(f, "yllcorner     $(hbmeta.yllcorner)\n")
-        write(f, "cellsize      $(hbmeta.cellsize)\n")
-        write(f, "NODATA_value  $(hbmeta.nodata)\n")
-
-        numdigits = parse(Int, cfg["write_digits"])
-        writedlm(f, round.(cmap, digits = numdigits), ' ')
-        close(f)
+        f = open(filename, "r")
+	f_dat = read(f)
+	c_dat = Libz.deflate(f_dat)
+	f_c = open("$(filename).gz", "w")
+	write(f_c, c_dat)
+	close(f_c)
+	rm(f)
     end
 end
 
@@ -405,38 +395,27 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
    
     compress_grids = flags.outputflags.compress_grids
 	
+    filename = "$(pref)_$(str)$(name).asc"
+    f = open(filename, "w")
+    write(f, "ncols         $(hbmeta.ncols)\n")
+    write(f, "nrows         $(hbmeta.nrows)\n")
+    write(f, "xllcorner     $(hbmeta.xllcorner)\n")
+    write(f, "yllcorner     $(hbmeta.yllcorner)\n")
+    write(f, "cellsize      $(hbmeta.cellsize)\n")
+    write(f, "NODATA_value  $(hbmeta.nodata)\n")
+
+    numdigits = parse(Int, cfg["write_digits"])
+    writedlm(f, round.(cmap, digits = numdigits), ' ')
+    close(f)
+    
     if compress_grids
-	filename = "$(pref)_$(str)$(name).gz"
-        #f = GZip.open(filename, "w6", 15)
-        io = open(filename, "w")
-	f = Libz.ZlibDeflateOutputStream(io)
-	#write(f, "ncols         $(hbmeta.ncols)\n")
-        #write(f, "nrows         $(hbmeta.nrows)\n")
-        #write(f, "xllcorner     $(hbmeta.xllcorner)\n")
-        #write(f, "yllcorner     $(hbmeta.yllcorner)\n")
-        #write(f, "cellsize      $(hbmeta.cellsize)\n")
-        #write(f, "NODATA_value  $(hbmeta.nodata)\n")
-
-
-        numdigits = parse(Int, cfg["write_digits"])
-        #GZip.write(f, round.(cmap, digits = numdigits), ' ')
-	for c in round.(cmap, digits = numdigits)
-	    write(f, c)
-	end
-        close(f)
-    else
-	filename = "$(pref)_$(str)$(name).asc"
-	f = open(filename, "w")
-        write(f, "ncols         $(hbmeta.ncols)\n")
-        write(f, "nrows         $(hbmeta.nrows)\n")
-        write(f, "xllcorner     $(hbmeta.xllcorner)\n")
-        write(f, "yllcorner     $(hbmeta.yllcorner)\n")
-        write(f, "cellsize      $(hbmeta.cellsize)\n")
-        write(f, "NODATA_value  $(hbmeta.nodata)\n")
-
-        numdigits = parse(Int, cfg["write_digits"])
-        writedlm(f, round.(cmap, digits = numdigits), ' ')
-        close(f)
+        f = open(filename, "r")
+	f_dat = read(f)
+	c_dat = Libz.deflate(f_dat)
+	f_c = open("$(filename).gz", "w")
+	write(f_c, c_dat)
+	close(f_c)
+	rm(f)
     end
 end
 
