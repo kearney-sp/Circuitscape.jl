@@ -365,7 +365,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
         numdigits = parse(Int, cfg["write_digits"])
-        writelm(f, round.(cmap, digits = numdigits), ' ')
+        writedlm(f, round.(cmap, digits = numdigits), ' ')
         close(f)
     end
 end
@@ -424,7 +424,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
         numdigits = parse(Int, cfg["write_digits"])
-        writelm(f, round.(cmap, digits = numdigits), ' ')
+        writedlm(f, round.(cmap, digits = numdigits), ' ')
         close(f)
     end
 end
