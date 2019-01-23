@@ -343,8 +343,10 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
 	
     if compress_grids
 	filename = "$(pref)_$(str)$(name).gz"
-        f = GZip.open(filename, "w6", 15)
-        write(f, "ncols         $(hbmeta.ncols)\n")
+        #f = GZip.open(filename, "w6", 15)
+        io = Libz.open(filename, "w")
+	f = Libz.ZlibDeflateOutputStream(io)
+	write(f, "ncols         $(hbmeta.ncols)\n")
         write(f, "nrows         $(hbmeta.nrows)\n")
         write(f, "xllcorner     $(hbmeta.xllcorner)\n")
         write(f, "yllcorner     $(hbmeta.yllcorner)\n")
@@ -352,7 +354,8 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
         numdigits = parse(Int, cfg["write_digits"])
-        GZip.write(f, round.(cmap, digits = numdigits), ' ')
+        #GZip.write(f, round.(cmap, digits = numdigits), ' ')
+	Libz.ZlibDeflateOutputStream(f, round.(cmap, digits = numdigits))
         close(f)
     else
 	filename = "$(pref)_$(str)$(name).asc"
@@ -402,8 +405,10 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
 	
     if compress_grids
 	filename = "$(pref)_$(str)$(name).gz"
-        f = GZip.open(filename, "w6", 15)
-        write(f, "ncols         $(hbmeta.ncols)\n")
+        #f = GZip.open(filename, "w6", 15)
+        io = Libz.open(filename, "w")
+	f = Libz.ZlibDeflateOutputStream(io)
+	write(f, "ncols         $(hbmeta.ncols)\n")
         write(f, "nrows         $(hbmeta.nrows)\n")
         write(f, "xllcorner     $(hbmeta.xllcorner)\n")
         write(f, "yllcorner     $(hbmeta.yllcorner)\n")
@@ -411,7 +416,8 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
         numdigits = parse(Int, cfg["write_digits"])
-        GZip.write(f, round.(cmap, digits = numdigits), ' ')
+        #GZip.write(f, round.(cmap, digits = numdigits), ' ')
+	Libz.ZlibDeflateOutputStream(f, round.(cmap, digits = numdigits))
         close(f)
     else
 	filename = "$(pref)_$(str)$(name).asc"
