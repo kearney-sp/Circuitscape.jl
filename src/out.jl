@@ -357,6 +357,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
         #GZip.write(f, round.(cmap, digits = numdigits), ' ')
 	for c in round.(cmap, digits = numdigits)
 	    write(f, c)
+	end
         close(f)
     else
 	filename = "$(pref)_$(str)$(name).asc"
@@ -421,6 +422,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
         #GZip.write(f, round.(cmap, digits = numdigits), ' ')
 	for c in round.(cmap, digits = numdigits)
 	    write(f, c)
+	end
         close(f)
     else
 	filename = "$(pref)_$(str)$(name).asc"
