@@ -361,7 +361,8 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
 	f_c = open("$(filename).gz", "w")
 	write(f_c, c_dat)
 	close(f_c)
-	rm(f)
+	close(f)
+	rm(filename)
     end
 end
 
@@ -415,7 +416,8 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
 	f_c = open("$(filename).gz", "w")
 	write(f_c, c_dat)
 	close(f_c)
-	rm(f)
+	close(f)
+	rm(filename)
     end
 end
 
