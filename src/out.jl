@@ -340,19 +340,21 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
     pref = split(cfg["output_file"], '.')[1]
     
     compress_grids = flags.outputflags.compress_grids
+    
+    numdigits = parse(Int, cfg["write_digits"])
+    cmap = round.(cmap, digits = numdigits)
 	
     if compress_grids
 	filename = "$(pref)_$(str)$(name).gz"
-        f = GZip.open(filename, "w6", 15)
+        f = GZip.open(filename, "w")
         write(f, "ncols         $(hbmeta.ncols)\n")
         write(f, "nrows         $(hbmeta.nrows)\n")
         write(f, "xllcorner     $(hbmeta.xllcorner)\n")
         write(f, "yllcorner     $(hbmeta.yllcorner)\n")
         write(f, "cellsize      $(hbmeta.cellsize)\n")
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
-
-        numdigits = parse(Int, cfg["write_digits"])
-        GZip.write(f, round.(cmap, digits = numdigits), ' ')
+        
+	GZip.write(f, [x*' ' for x in cmap])
         close(f)
     else
 	filename = "$(pref)_$(str)$(name).asc"
@@ -364,8 +366,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
         write(f, "cellsize      $(hbmeta.cellsize)\n")
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-        numdigits = parse(Int, cfg["write_digits"])
-        writedlm(f, round.(cmap, digits = numdigits), ' ')
+        writedlm(f, cmap, ' ')
         close(f)
     end
 end
@@ -410,8 +411,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
         write(f, "cellsize      $(hbmeta.cellsize)\n")
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-        numdigits = parse(Int, cfg["write_digits"])
-        GZip.write(f, round.(cmap, digits = numdigits), ' ')
+        GZip.write(f, [x*' ' for x in cmap])
         close(f)
     else
 	filename = "$(pref)_$(str)$(name).asc"
@@ -423,8 +423,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
         write(f, "cellsize      $(hbmeta.cellsize)\n")
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-        numdigits = parse(Int, cfg["write_digits"])
-        writedlm(f, round.(cmap, digits = numdigits), ' ')
+	writedlm(f, cmap, ' ')
         close(f)
     end
 end
