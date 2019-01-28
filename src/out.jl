@@ -345,7 +345,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
     cmap = round.(cmap, digits = numdigits)
 	
     if compress_grids
-	filename = "$(pref)_$(str)$(name).gz"
+	filename = "$(pref)_$(str)$(name).asc.gz"
         CodecZlib.open(GzipCompressorStream, filename, "w") do f
 	    write(f, "ncols         $(hbmeta.ncols)\n")
             write(f, "nrows         $(hbmeta.nrows)\n")
@@ -401,7 +401,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
     compress_grids = flags.outputflags.compress_grids
 	
     if compress_grids
-	filename = "$(pref)_$(str)$(name).gz"
+	filename = "$(pref)_$(str)$(name).asc.gz"
         CodecZlib.open(GzipCompressorStream, filename, "w") do f
 	    write(f, "ncols         $(hbmeta.ncols)\n")
             write(f, "nrows         $(hbmeta.nrows)\n")
