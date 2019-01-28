@@ -354,7 +354,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
         write(f, "cellsize      $(hbmeta.cellsize)\n")
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
         
-	GZip.write(f, [x*' ' for x in cmap])
+	GZip.write(f, [string(x)*' ' for x in cmap])
         close(f)
     else
 	filename = "$(pref)_$(str)$(name).asc"
@@ -411,7 +411,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
         write(f, "cellsize      $(hbmeta.cellsize)\n")
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-        GZip.write(f, [x*' ' for x in cmap])
+        GZip.write(f, [string(x)*' ' for x in cmap])
         close(f)
     else
 	filename = "$(pref)_$(str)$(name).asc"
