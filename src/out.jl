@@ -353,7 +353,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
             write(f, "yllcorner     $(hbmeta.yllcorner)\n")
             write(f, "cellsize      $(hbmeta.cellsize)\n")
             write(f, "NODATA_value  $(hbmeta.nodata)\n")  
-	    writedlm(f, cmap, ' ')
+	    CSV.write(f, cmap, delim=' ')
 	end
     else
 	filename = "$(pref)_$(str)$(name).asc"
@@ -365,7 +365,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
         write(f, "cellsize      $(hbmeta.cellsize)\n")
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-        writedlm(f, cmap, ' ')
+        CSV.write(f, cmap, delim=' ')
         close(f)
     end
 end
@@ -409,7 +409,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
             write(f, "yllcorner     $(hbmeta.yllcorner)\n")
             write(f, "cellsize      $(hbmeta.cellsize)\n")
             write(f, "NODATA_value  $(hbmeta.nodata)\n")  
-	    writedlm(f, cmap, ' ')
+	    CSV.write(f, cmap, delim=' ')
 	end
     else
 	filename = "$(pref)_$(str)$(name).asc"
@@ -421,7 +421,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
         write(f, "cellsize      $(hbmeta.cellsize)\n")
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-	writedlm(f, cmap, ' ')
+	CSV.write(f, cmap, delim=' ')
         close(f)
     end
 end
