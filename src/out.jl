@@ -403,7 +403,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
 	
     if compress_grids
 	filename = "$(pref)_$(str)$(name).gz"
-        f = GZip.open(filename, "w6", 15)
+        f = GZip.open(filename, "w")
         write(f, "ncols         $(hbmeta.ncols)\n")
         write(f, "nrows         $(hbmeta.nrows)\n")
         write(f, "xllcorner     $(hbmeta.xllcorner)\n")
