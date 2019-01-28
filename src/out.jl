@@ -347,12 +347,12 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
     if compress_grids
 	filename = "$(pref)_$(str)$(name).gz"
         f = GZip.open(filename, "w")
-        write(f, "ncols         $(hbmeta.ncols)\n")
-        write(f, "nrows         $(hbmeta.nrows)\n")
-        write(f, "xllcorner     $(hbmeta.xllcorner)\n")
-        write(f, "yllcorner     $(hbmeta.yllcorner)\n")
-        write(f, "cellsize      $(hbmeta.cellsize)\n")
-        write(f, "NODATA_value  $(hbmeta.nodata)\n")
+        GZip.write(f, "ncols         $(hbmeta.ncols)\n")
+        GZip.write(f, "nrows         $(hbmeta.nrows)\n")
+        GZip.write(f, "xllcorner     $(hbmeta.xllcorner)\n")
+        GZip.write(f, "yllcorner     $(hbmeta.yllcorner)\n")
+        GZip.write(f, "cellsize      $(hbmeta.cellsize)\n")
+        GZip.write(f, "NODATA_value  $(hbmeta.nodata)\n")
         
 	cmap_str = [string(x)*' ' for x in cmap]
 	GZip.write(f, cmap_str)
@@ -405,12 +405,12 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
     if compress_grids
 	filename = "$(pref)_$(str)$(name).gz"
         f = GZip.open(filename, "w")
-        write(f, "ncols         $(hbmeta.ncols)\n")
-        write(f, "nrows         $(hbmeta.nrows)\n")
-        write(f, "xllcorner     $(hbmeta.xllcorner)\n")
-        write(f, "yllcorner     $(hbmeta.yllcorner)\n")
-        write(f, "cellsize      $(hbmeta.cellsize)\n")
-        write(f, "NODATA_value  $(hbmeta.nodata)\n")
+        GZip.write(f, "ncols         $(hbmeta.ncols)\n")
+        GZip.write(f, "nrows         $(hbmeta.nrows)\n")
+        GZip.write(f, "xllcorner     $(hbmeta.xllcorner)\n")
+        GZip.write(f, "yllcorner     $(hbmeta.yllcorner)\n")
+        GZip.write(f, "cellsize      $(hbmeta.cellsize)\n")
+        GZip.write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
 	cmap_str = [string(x)*' ' for x in cmap]
 	GZip.write(f, cmap_str)
