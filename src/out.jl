@@ -346,15 +346,17 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
 	
     if compress_grids
 	filename = "$(pref)_$(str)$(name).asc.gz"
-        CodecZlib.open(GzipCompressorStream, filename, "w") do f
-	    write(f, "ncols         $(hbmeta.ncols)\n")
-            write(f, "nrows         $(hbmeta.nrows)\n")
-            write(f, "xllcorner     $(hbmeta.xllcorner)\n")
-            write(f, "yllcorner     $(hbmeta.yllcorner)\n")
-            write(f, "cellsize      $(hbmeta.cellsize)\n")
-            write(f, "NODATA_value  $(hbmeta.nodata)\n")  
-	    CSV.write(f, cmap, delim=' ')
-	end
+        file = Libz.open(filename, "w")
+	f = Libz.ZlibDeflateOutputStream(file)
+	write(f, "ncols         $(hbmeta.ncols)\n")
+        write(f, "nrows         $(hbmeta.nrows)\n")
+        write(f, "xllcorner     $(hbmeta.xllcorner)\n")
+        write(f, "yllcorner     $(hbmeta.yllcorner)\n")
+        write(f, "cellsize      $(hbmeta.cellsize)\n")
+        write(f, "NODATA_value  $(hbmeta.nodata)\n")  
+	writedlm(f, cmap, ' ')
+	close(f)
+
     else
 	filename = "$(pref)_$(str)$(name).asc"
 	f = open(filename, "w")
@@ -365,7 +367,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta;
         write(f, "cellsize      $(hbmeta.cellsize)\n")
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-        CSV.write(f, cmap, delim=' ')
+        writedlm(f, cmap, ' ')
         close(f)
     end
 end
@@ -402,15 +404,17 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
 	
     if compress_grids
 	filename = "$(pref)_$(str)$(name).asc.gz"
-        CodecZlib.open(GzipCompressorStream, filename, "w") do f
-	    write(f, "ncols         $(hbmeta.ncols)\n")
-            write(f, "nrows         $(hbmeta.nrows)\n")
-            write(f, "xllcorner     $(hbmeta.xllcorner)\n")
-            write(f, "yllcorner     $(hbmeta.yllcorner)\n")
-            write(f, "cellsize      $(hbmeta.cellsize)\n")
-            write(f, "NODATA_value  $(hbmeta.nodata)\n")  
-	    CSV.write(f, cmap, delim=' ')
-	end
+        file = Libz.open(filename, "w")
+	f = Libz.ZlibDeflateOutputStream(file)
+	write(f, "ncols         $(hbmeta.ncols)\n")
+        write(f, "nrows         $(hbmeta.nrows)\n")
+        write(f, "xllcorner     $(hbmeta.xllcorner)\n")
+        write(f, "yllcorner     $(hbmeta.yllcorner)\n")
+        write(f, "cellsize      $(hbmeta.cellsize)\n")
+        write(f, "NODATA_value  $(hbmeta.nodata)\n")  
+	writedlm(f, cmap, ' ')
+	close(f)
+    
     else
 	filename = "$(pref)_$(str)$(name).asc"
 	f = open(filename, "w")
@@ -421,7 +425,7 @@ function write_aagrid(cmap, name, cfg, flags, hbmeta, cellmap;
         write(f, "cellsize      $(hbmeta.cellsize)\n")
         write(f, "NODATA_value  $(hbmeta.nodata)\n")
 
-	CSV.write(f, cmap, delim=' ')
+	writedlm(f, cmap, ' ')
         close(f)
     end
 end
