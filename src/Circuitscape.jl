@@ -5,8 +5,7 @@ using SimpleWeightedGraphs
 using LightGraphs
 using IterativeSolvers
 using GZip
-using CodecZlib
-using CSV
+using Libz
 
 using LinearAlgebra
 using SparseArrays
